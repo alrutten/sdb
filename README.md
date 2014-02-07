@@ -1,4 +1,4 @@
 sdb
 ===
 
-devtools:::install_github("valcu/sdb")
+devtools::install_github("valcu/sdb")
