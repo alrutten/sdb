@@ -1,7 +1,7 @@
 #' @title credentialsPath
 #' @name credentialsPath
-#' @description path to credentials file
-#' @examples credentialsPath("scidb.mpio.orn.mpg.de")
+#' @description path to credentials directory & file
+#' @examples # credentialsPath("scidb.mpio.orn.mpg.de")
 credentialsPath <- function(host) {
 	lp = file.access(.libPaths() , 2)
 	dir = paste(names(lp[lp == 0][1]), "sdb_conf", sep = .Platform$file.sep)
@@ -13,7 +13,8 @@ credentialsPath <- function(host) {
 #' @name saveCredentials
 #' @description Saves user name and password locally
 #' @examples saveCredentials(user = 'test', password = 'test')
-saveCredentials <- function(user, password, database, host = "scidb.mpio.orn.mpg.de", path = credentialsPath(host)) {
+saveCredentials <- function(user, password, database, host = "scidb.mpio.orn.mpg.de", 
+                            path = credentialsPath(host)) {
 	
 	# as well for mysql --defaults-file="/path/to/credentials.txt"
 	cat('[client]\n', 
@@ -24,8 +25,8 @@ saveCredentials <- function(user, password, database, host = "scidb.mpio.orn.mpg
 	 file = path, sep = "")
 	
 	if(file.info(path)$size > 1) return(TRUE)
-	
 }
+
 
 #' @title connect to db
 #' @name dbcon
@@ -40,33 +41,42 @@ saveCredentials <- function(user, password, database, host = "scidb.mpio.orn.mpg
 
 dbcon <- function(user, password, database, host = "scidb.mpio.orn.mpg.de", path) {
 
-	if( Sys.info()["sysname"] == 'Linux' ) require( RMySQL)
-	
+  OS = Sys.info()["sysname"]
+  
 	if(missing(path)) path = credentialsPath(host)  
 	
 	if(file.exists(path))
 		eval(parse(text = readLines(path)[-1]))
-
-   
-   if(missing(database)){ 
-		message("You did not select a database so you should run ", dQuote("USE database_name"), " first.")
-		tempcon = dbConnect(dbDriver("MySQL"), username = user, password = password, host = host)
-		message("here is a list of your databases:")
-		print(dbq("show databases", tempcon)[-1, ] )
-		dbDisconnect(tempcon)
-		}  
-	
-	if(missing(database))
-	dbConnect(dbDriver("MySQL"), username = user, password = password, host = host) else
-	dbConnect(dbDriver("MySQL"), username = user, password = password, host = host, dbname = database)
-
+ 
+  if(missing(path) && missing(user)) stop("Run", dQuote(" saveCredentials() "), "first or give an user & pwd")
+    
+  
+  if(OS == "Linux"){
+    require(RMySQL) 
+    con = dbConnect(dbDriver("MySQL"), username = user, password = password, host = host)
+    if( !missing(database) )
+      mysqlQuickSQL(con, paste("USE", database))
+  }
+  
+  if(OS == "Windows") {
+    require(RODBC)
+    con = odbcConnect(host, uid = user, pwd = password) 
+    
+    if( !missing(database) )
+      sqlQuery(con, paste("USE", database))
+  }
+  
+  return(con)
 	
  } 
 
 
-
-
-
+#' @title close connection
+#' @name closeCon
+#' @description close db connection
+closeCon <- function(con) {
+  if(Sys.info()["sysname"] == "Linux") dbDisconnect(con) else close(con)
+  }
 
 
 

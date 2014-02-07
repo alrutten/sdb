@@ -3,13 +3,18 @@
 dbq <- function(query, con) {
 
 	if(missing(con)) {
-	con = dbcon()
-	on.exit(dbDisconnect(con))
-	}
+  	con = dbcon()
+  	on.exit(closeCon(con))
+  	}
 		
-	if(missing(query)) string = "SELECT 'You did not write any query!'"
+	if(missing(query)) query = "SELECT 'You did not write any query!'"
 
-	return(mysqlQuickSQL(con, query))
+  
+	if(Sys.info()["sysname"] == "Linux") 
+  	return(mysqlQuickSQL(con, query)) else {
+  	  return(sqlQuery(con, query,error = TRUE))
+      
+  	}
 
 	
 }

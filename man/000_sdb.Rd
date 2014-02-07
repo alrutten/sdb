@@ -3,9 +3,12 @@
 \alias{sdb}
 \docType{package}
 
-\title{sdb: a db interface to scidb.mpio.orn.mpg.de}
+\title{sdb: an R-mysql interface}
 \description{ 
-	\pkg{sdb} a db interface to scidb.mpio.orn.mpg.de
+	\pkg{sdb} This is a meta-package on top of RMySQL (easy to install on Linux)
+   and RODBC (easy to install on Windows)
+   The packge has host = "scidb.mpio.orn.mpg.de" as default argument for some functions
+   but host is not hardwired. 
 	}
 
 \keyword{package}
@@ -20,17 +23,19 @@
 
 \examples{
 \dontrun{ 
-con = dbcon("test", "test")
-dbq( "USE test", con)
-dbq( "select * from table1", con)
+# "generic" connection: no database chosen
+con = dbcon(user = "test", password = "test")
+dbq( "select * from test.table1", con)
 
-# Once you save your settings locally you can run dbq without an explicit connection.
-saveCredentials(user = 'test', password = 'test', dbname = 'test')
+# connection to the "test" database
+con = dbcon(user = "test", password = "test", database = "test")
+dbq("select * from table1", con)
 
+# You can save your settings locally on disk. 
+saveCredentials(user = 'test', password = 'test', database = 'test')
+
+#... then  you can run dbq without an explicit connection.
 dbq("select * from table1")
-
-
-
 
 }
 
