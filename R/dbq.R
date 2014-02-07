@@ -1,14 +1,18 @@
 
 
-scidbQuery <-  function (con, string) {
+dbq <- function(query, con) {
 
-	if(missing(con)) dbcon()
-	if(missing(string)) string = "SELECT 'ARE YOU JOKING?'"
-
-	mysqlQuickSQL(con, string)
-
-		 
+	if(missing(con)) {
+	con = dbcon()
+	on.exit(dbDisconnect(con))
 	}
+		
+	if(missing(query)) string = "SELECT 'You did not write any query!'"
+
+	return(mysqlQuickSQL(con, query))
+
+	
+}
 
 
 
