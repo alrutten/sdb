@@ -22,7 +22,6 @@ saveCredentials <- function(user, password, database, host = "scidb.mpio.orn.mpg
 }
 
 
-
 dbcon <- function(user, password, database, host = "scidb.mpio.orn.mpg.de", path) {
 
   OS = Sys.info()["sysname"]
@@ -55,14 +54,35 @@ dbcon <- function(user, password, database, host = "scidb.mpio.orn.mpg.de", path
  } 
 
 
-
 closeCon <- function(con) {
   if(Sys.info()["sysname"] == "Linux") dbDisconnect(con) else close(con)
   }
 
 
+# query = c("SET @v1 = 1","SET @v2 = 'a'", "SELECT * FROM table1 where Column1 = @v1 and Column2 = @v2")
 
 
+mysqlCLI = function("query") {
+  mysql = paste0("mysql --defaults-file=", credentialsPath("scidb.mpio.orn.mpg.de") )
+  temp = paste0("/tmp/", basename(tempfile(fileext=".txt")))
+  
+  strg = paste(mysql, "-e", 
+               shQuote((paste(
+                paste(query, collapse = ";"), 
+                  "INTO OUTFILE", shQuote(temp), ";")))
+               )
+  
+  system(strg)
+  read.table(temp)
+  
+  
+  }
+
+
+
+
+  
+  
 
 
 
