@@ -1,7 +1,4 @@
-#' @title credentialsPath
-#' @name credentialsPath
-#' @description path to credentials directory & file
-#' @examples # credentialsPath("scidb.mpio.orn.mpg.de")
+
 credentialsPath <- function(host) {
 	lp = file.access(.libPaths() , 2)
 	dir = paste(names(lp[lp == 0][1]), "sdb_conf", sep = .Platform$file.sep)
@@ -9,10 +6,7 @@ credentialsPath <- function(host) {
 	paste(dir, paste0("cnf_", host, ".txt"), sep = .Platform$file.sep)
 	}
 	
-#' @title saveCredentials
-#' @name saveCredentials
-#' @description Saves user name and password locally
-#' @examples saveCredentials(user = 'test', password = 'test')
+
 saveCredentials <- function(user, password, database, host = "scidb.mpio.orn.mpg.de", 
                             path = credentialsPath(host)) {
 	
@@ -28,16 +22,6 @@ saveCredentials <- function(user, password, database, host = "scidb.mpio.orn.mpg
 }
 
 
-#' @title connect to db
-#' @name dbcon
-#' @description connect to one of the scidb.mpio.orn.mpg.de databases 
-#' @seealso \code{\link{saveCredentials}}
-#' @examples 
-#' con = dbcon(user = 'test', password = 'test')
-#' con = dbcon("test", 'test', 'test')
-#' # Once credentials are saved with saveCredentials(). 
-#' con = dbcon()
-#' con = dbcon('FIELD_BTatWESTERHOLZ') 
 
 dbcon <- function(user, password, database, host = "scidb.mpio.orn.mpg.de", path) {
 
@@ -71,9 +55,7 @@ dbcon <- function(user, password, database, host = "scidb.mpio.orn.mpg.de", path
  } 
 
 
-#' @title close connection
-#' @name closeCon
-#' @description close db connection
+
 closeCon <- function(con) {
   if(Sys.info()["sysname"] == "Linux") dbDisconnect(con) else close(con)
   }
