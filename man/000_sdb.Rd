@@ -32,10 +32,12 @@ con = dbcon(user = "test", password = "test", database = "test")
 dbq("select * from table1", con)
 
 # You can save your settings locally on disk. 
+# save a default database as well
 saveCredentials(user = 'test', password = 'test', database = 'test')
 
 #... then  you can run dbq without an explicit connection.
 dbq("select * from table1")
+
 
 }
 
