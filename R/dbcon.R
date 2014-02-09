@@ -60,12 +60,12 @@ closeCon <- function(con) {
 
 
 # query = c("SET @v1 = 1","SET @v2 = 'a'", "SELECT * FROM table1 where Column1 = @v1 and Column2 = @v2")
-#  query = "select 1"
 
-mysqlCLI = function("query") {
-  creds = credentialsPath("scidb.mpio.orn.mpg.de")
-  mysql = paste0("mysql --defaults-file=", credentialsPath("scidb.mpio.orn.mpg.de") )
-  temp = paste(dirname(creds), basename(tempfile(fileext=".txt")) , sep = .Platform$file.sep)
+
+mysqlCLI = function("query", host = "scidb.mpio.orn.mpg.de", outfileDir = "/srv/www/htdocs/temp") {
+  creds = credentialsPath(host)
+  mysql = paste0("mysql --defaults-file=", creds )
+  temp = paste(outfileDir, basename(tempfile(fileext=".txt")) , sep = .Platform$file.sep)
   
   strg = paste(mysql, "-e", 
                shQuote((paste(
@@ -76,10 +76,9 @@ mysqlCLI = function("query") {
   # todo: select into a file on /srv ----> then wget
   
   system(strg)
-  Sys.chmod(temp)
   
-  read.table(temp)
-  
+  read.table( paste("http:/",host, basename(dirname(temp)) , basename(temp), sep = "/" ) )
+
   
   }
 
