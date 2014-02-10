@@ -17,6 +17,6 @@ saveCredentials <- function(user, password, database, host = "scidb.mpio.orn.mpg
       'password=', shQuote(password),'\n', 
       'database=', shQuote(database),'\n', 
       file = path, sep = "")
-  
+  Sys.chmod(path)
   if(file.info(path)$size > 1) return(TRUE)
 }

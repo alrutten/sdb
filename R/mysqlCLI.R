@@ -1,23 +1,19 @@
 
-mysqlCLI <- function(query, host = "scidb.mpio.orn.mpg.de", outfileDir = "/srv/www/htdocs/temp") {
-  creds = credentialsPath(host)
-  mysql = paste0("mysql --defaults-file=", creds )
-  temp  = paste(outfileDir, basename(tempfile(fileext=".txt")) , sep = .Platform$file.sep)
+mysqlCLI <- function(query, host, args = paste0("--defaults-file=",credentialsPath(host)) ) {
+  mysql = paste("mysql", args)
+  temp  = tempfile()
   
   strg  = paste(mysql, "-e", 
-               shQuote((paste(
-                 paste(query, collapse = ";"), 
-                 "INTO OUTFILE", shQuote(temp, type = "sh"), ";")))
-  )
-  
-  
+               shQuote(paste(query, collapse = ";") ), 
+               " >", temp)
+
   system(strg)
+
+  return(read.table(temp, header = TRUE, stringsAsFactors = FALSE))
   
-  read.table( paste("http:/",host, basename(dirname(temp)) , basename(temp), sep = "/" ) )
-  
-# mysql> system rm /tmp/results.out
+  file.remove(temp)
   
 }
 
-#qstr = c("SET @v1 = 1","SET @v2 = 'a'", "SELECT * FROM table1 where Column1 = @v1 and Column2 = @v2")
-#mysqlCLI(qstr)
+# qstr = c("SET @v1 = 1","SET @v2 = 'a'", "SELECT * FROM table1 where Column1 = @v1 and Column2 = @v2")
+# mysqlCLI(qstr)
