@@ -1,19 +1,18 @@
 
-mysqlCLI <- function(query, host, args = paste0("--defaults-file=",credentialsPath(host)) ) {
+mysqlCLI <- function(query, host = "scidb.mpio.orn.mpg.de", args = paste0("--defaults-file=", shQuote(credentialsPath(host))) ) {
   mysql = paste("mysql", args)
   temp  = tempfile()
+  on.exit(file.remove(temp))
   
   strg  = paste(mysql, "-e", 
                shQuote(paste(query, collapse = ";") ), 
-               " >", temp)
+               " > ", shQuote(temp) )
 
   system(strg)
 
   return(read.table(temp, header = TRUE, stringsAsFactors = FALSE))
   
-  file.remove(temp)
+  
   
 }
 
-# qstr = c("SET @v1 = 1","SET @v2 = 'a'", "SELECT * FROM table1 where Column1 = @v1 and Column2 = @v2")
-# mysqlCLI(qstr)

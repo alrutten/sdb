@@ -1,28 +1,43 @@
+setGeneric("dbq", function(con,q, ...)   standardGeneric("dbq") )
 
 
-dbq <- function(query, con) {
+setMethod("dbq",  
+          signature  = c(con = "RODBC", q = "character"), 
+          definition = function(con, q, ...) {
+			cat("--> DB query via ODBC\n")
+			sqlQuery(con, q,error = TRUE, ... )
+          }
+)
 
-	if(missing(con)) {
-  	con = dbcon()
-  	on.exit(closeCon(con))
-  	}
-		
-	if(missing(query)) query = "SELECT 'You did not write any query!'"
+setMethod("dbq",  
+          signature  = c(con = "MySQLConnection", q = "character"), 
+          definition = function(con, q, ...) {
+		  cat("--> DB query via DBI\n")
+			qstr = dbSendQuery(con, q, ...)
+			fetch(qstr, n = -1)
+           }
+)
 
-  
-	if(Sys.info()["sysname"] == "Linux") {
-	  q = dbSendQuery(con, query)
-    res = fetch(q, n = -1)
-	} 
-  
-	if(Sys.info()["sysname"] == "Windows") {
-  	res = sqlQuery(con, query,error = TRUE)
-    }
-  
-  return(res)
+setMethod("dbq",  
+          signature  = c(con = "missing", q = "character"), 
+          definition = function(q, native = FALSE, ...) {
+			if(!native) {
+				con = dbcon()
+				on.exit(closeCon(con))
+				return(dbq(con, q)	)
+				}
+			if(native) {
+			cat("--> DB query via native mysql CLI\n")
+				return(mysqlCLI(q))
+			}	
 
-	
-}
+		  }
+)
+
+
+
+
+
 
 
 

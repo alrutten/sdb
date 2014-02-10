@@ -1,6 +1,5 @@
 
 
-
 dbcon <- function(user, password, database, host = "scidb.mpio.orn.mpg.de", path) {
 
   OS = Sys.info()["sysname"]
