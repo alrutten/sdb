@@ -13,7 +13,10 @@
  \itemize{
 	\item Under Windows \pkg{sdb} needs \pkg{RODBC} and the \href{https://dev.mysql.com/downloads/connector/odbc}{ODBC connector}
 	In order to add and set a mysql-ODBC driver connection Run: 
-	   \preformatted{ shell("\%SystemRoot\%\\system32\\odbcad32.exe") }
+	   \preformatted{ shell("\%SystemRoot\%/system32/odbcad32.exe") }
+       When configuring MySQL connector go to Details/Metadata and choose "Always handle binary function results as character data".
+       
+     
 
 	   \item Under Linux \pkg{sdb} needs \pkg{RMySQL}.
 	
