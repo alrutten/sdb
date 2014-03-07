@@ -10,7 +10,9 @@ mysqlCLI <- function(query, host = "scidb.mpio.orn.mpg.de", args = paste0("--def
 
   system(strg)
 
-  return(read.table(temp, header = TRUE, stringsAsFactors = FALSE))
+  res = try(read.table(temp, header = TRUE, stringsAsFactors = FALSE), silent = TRUE)
+  if( inherits(res, 'try-error')) res = NULL
+  return(res)
   
   
   

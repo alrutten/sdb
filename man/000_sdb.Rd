@@ -61,7 +61,8 @@ qstr =c("SET @v1 = 1",
  d = dbq(q = qstr, native = TRUE)
  d
 
- 
+ # remove conection file if you like
+ removeCredentials()
  
  
 }

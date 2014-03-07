@@ -5,10 +5,11 @@
 dbcon <- function(user, password, database, host = "scidb.mpio.orn.mpg.de", path) {
 
   # figure out credentials
-  if(missing(path) && missing(user)) stop("Run", dQuote(" saveCredentials() "), "first or give an user & pwd")
+  if( missing(user) & !credentialsExist(host) & missing(path) ) 
+	stop("Run ", dQuote("saveCredentials()"), " first, enter your user name & password or add a path to a credentials file")
 
-   if(missing(user) & missing(password)) {
-		if(missing(path)) p = path else p = credentialsPath(host) 
+   if(missing(user) ) {
+		if(missing(path)) p = credentialsPath(host) else p = path
 		eval(parse(text = readLines(p)[-1]))
 	}
 	
