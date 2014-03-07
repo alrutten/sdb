@@ -1,4 +1,5 @@
 
+
 credentialsPath <- function(host) {
   lp = file.access(.libPaths() , 2)
   dir = paste(names(lp[lp == 0][1]), "sdb_conf", sep = .Platform$file.sep)
@@ -20,4 +21,7 @@ saveCredentials <- function(user, password, database, host = "scidb.mpio.orn.mpg
   Sys.chmod(path)
   if(file.info(path)$size > 1) return(TRUE)
 }
+
+
+
 

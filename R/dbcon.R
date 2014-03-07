@@ -1,16 +1,19 @@
 
 
+
+
 dbcon <- function(user, password, database, host = "scidb.mpio.orn.mpg.de", path) {
 
-  OS = Sys.info()["sysname"]
-  
-	if(missing(path) & missing(user) ) path = credentialsPath(host)  
-	
-	if(missing(user) && file.exists(path))
-		eval(parse(text = readLines(path)[-1]))
- 
+  # figure out credentials
   if(missing(path) && missing(user)) stop("Run", dQuote(" saveCredentials() "), "first or give an user & pwd")
-    
+
+   if(missing(user) & missing(password)) {
+		if(missing(path)) p = path else p = credentialsPath(host) 
+		eval(parse(text = readLines(p)[-1]))
+	}
+	
+  #run query
+  OS = Sys.info()["sysname"]
   
   if(OS == "Linux"){
     require(RMySQL) 
