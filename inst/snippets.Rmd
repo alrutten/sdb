@@ -1,0 +1,49 @@
+Using snippets
+==============
+
+#### Saving an arbitrary query to DBLOG.snippets with snipSave().
+
+`snipSave()` has a [format](https://github.com/andialbrecht/sqlparse/) argument (default `TRUE`) which allows formating of messy querries. 
+`snipSave()` requires to save your credentials with `saveCredentials()`.
+
+```{r, eval=FALSE}
+require(sdb)
+dbq(q = "select 1")
+```
+
+
+```{r, eval=FALSE}
+snipSave('SelecT SPECIFIC_NAME,ROUTINE_SCHEMA FROm information_schema.ROUTINES ') 
+```
+
+#### Clonning a snippet simply makes a copy of that snippet and replaces the author with your name.
+```{r, eval=FALSE} 
+snipClone(1)
+snipDrop(2)
+```
+
+#### Saving a bunch of queries from a file with snipLoadFromFile().
+```{r, eval=FALSE}
+snipLoadFromFile('~/__queries.sql')
+snipLoadFromFile('~/__queries_noformat.sql', sep = ";;;", format = FALSE)
+```
+
+
+
+#### Searching by keyword and/or author.
+```{r}
+s = snipSearch("date")
+```
+
+#### Fetching a snippet by ID.
+```{r}
+s1 = snipFetch(1)
+
+dbq(q = s1)
+```
+
+
+
+
+
+
