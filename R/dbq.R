@@ -13,9 +13,9 @@ setMethod("dbq",
           signature  = c(con = "MySQLConnection", q = "character"), 
           definition = function(con, q, ...) {
 		  # cat("--> DB query via DBI\n")
-			#qstr = dbSendQuery(con, q, ...)
-			#fetch(qstr, n = -1)
-			dbGetQuery(con, q, ...)
+			qstr = dbSendQuery(con, q, ...)
+			fetch(qstr, n = -1)
+			#dbGetQuery(con, q, ...)
            }
 )
 
