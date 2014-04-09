@@ -23,7 +23,7 @@ dbcon <- function(user, password, database, host = "scidb.mpio.orn.mpg.de", path
     require(RODBC)
     conStr=paste0("SERVER=",host,";DRIVER=MySQL ODBC 5.2 Unicode Driver;UID=",user,";PWD=",password,";case=nochange;option=268435456")
     con = odbcDriverConnect(connection=conStr) 
-    if (con==-1) stop('please download and install the ODBC connector from https://dev.mysql.com/downloads/connector/odbc/ (if install fails with error code 126, see http://forums.mysql.com/read.php?37,599399,599399)')
+    if (con==-1) stop('please download and install the MySQL ODBC 5.2 connector from https://dev.mysql.com/downloads/connector/odbc/ (if install fails with error code 126, see http://forums.mysql.com/read.php?37,599399,599399)')
     if( !missing(database) )
       sqlQuery(con, paste("USE", database))
   }
