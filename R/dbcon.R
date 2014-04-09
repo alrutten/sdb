@@ -1,6 +1,5 @@
 
 
-
 dbcon <- function(user, password, database, host = "scidb.mpio.orn.mpg.de", path) {
 
   # figure out credentials
@@ -24,7 +23,7 @@ dbcon <- function(user, password, database, host = "scidb.mpio.orn.mpg.de", path
   
   if(OS == "Windows") {
     require(RODBC)
-    conStr=paste0("SERVER=",host,";DRIVER=MySQL ODBC 5.2 Unicode Driver;DATABASE=",database,";UID=",user,";PWD=",password,";case=nochange")
+    conStr=paste0("SERVER=",host,";DRIVER=MySQL ODBC 5.2 Unicode Driver;UID=",user,";PWD=",password,";case=nochange")
     con = odbcDriverConnect(connection=conStr) 
     if (con==-1) stop('please download and install the ODBC connector from https://dev.mysql.com/downloads/connector/odbc/')
     if( !missing(database) )
