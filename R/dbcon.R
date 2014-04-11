@@ -21,9 +21,19 @@ dbcon <- function(user, password, database, host = "scidb.mpio.orn.mpg.de", path
   
   if(OS == "Windows") {
     require(RODBC)
-    conStr=paste0("SERVER=",host,";DRIVER=MySQL ODBC 5.3 Unicode Driver;UID=",user,";PWD=",password,";case=nochange;option=268435456")
+    
+    drv = utils::readRegistry("SOFTWARE\\ODBC\\ODBCINST.INI",   hive="HLM", maxdepth=1)
+    
+    if( length (drv) == 0) 
+      stop('Please download and install the latest MySQL ODBC connector from https://dev.mysql.com/downloads/connector/odbc/')
+        
+    drv = grep("MySQL",  names(drv), value = TRUE)
+    drv = sort(drv, decreasing = TRUE)[1]
+    
+    conStr=paste0("SERVER=",host,";DRIVER=",drv,";UID=",user,";PWD=",password,";case=nochange;option=268435456")
+    
     con = odbcDriverConnect(connection=conStr) 
-    if (con==-1) stop('please download and install the MySQL ODBC 5.3 connector from https://dev.mysql.com/downloads/connector/odbc/ (if install fails with error code 126, see http://forums.mysql.com/read.php?37,599399,599399)')
+  
     if( !missing(database) )
       sqlQuery(con, paste("USE", database))
   }
@@ -36,8 +46,6 @@ dbcon <- function(user, password, database, host = "scidb.mpio.orn.mpg.de", path
 closeCon <- function(con) {
   if(Sys.info()["sysname"] == "Linux") dbDisconnect(con) else close(con)
   }
-
-
 
 
 
