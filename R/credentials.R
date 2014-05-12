@@ -18,6 +18,7 @@ credentialsPath <- function(host) {
 #' @return credentialsExist,removeCredentials, and saveCredentials all return TRUE if successful; credentialsPath returns the filename of the credentialsfile.
 #' @aliases credentialsPath, credentialsExist, removeCredentials
 #' @seealso \code{\link{dbcon}},\code{\link{dbq}}
+#' @author AR 2014-05-12
 saveCredentials <- function(user, password, database, host = "scidb.mpio.orn.mpg.de", 
                             path = credentialsPath(host)) {
   

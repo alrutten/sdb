@@ -27,6 +27,9 @@ within a host. removeCredentials removes the
 credentialsfile for the specified host credentialsExist
 checks if there is a credentialfile for the specified host.
 }
+\author{
+AR 2014-05-12
+}
 \seealso{
 \code{\link{dbcon}},\code{\link{dbq}}
 }

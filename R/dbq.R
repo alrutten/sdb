@@ -7,6 +7,7 @@
 #' @param q a querystring
 #' @seealso \code{\link{saveCredentials}},\code{\link{dbcon}}
 #' @return returns the result of running query q.
+#' @author AR 2014-05-12
 setGeneric("dbq", function(con,q, ...)   standardGeneric("dbq") )
 
 

@@ -31,6 +31,9 @@ Windows, RODBC is used. If database is specified but
 username and password are not, the database argument in the
 call to dbcon() is used.
 }
+\author{
+AR 2014-05-12
+}
 \seealso{
 \code{\link{saveCredentials}}, \code{\link{dbq}}
 }
