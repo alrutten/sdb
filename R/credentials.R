@@ -24,7 +24,7 @@ saveCredentials <- function(user, password, database, host = "scidb.mpio.orn.mpg
 
 
 removeCredentials <-function(host = "scidb.mpio.orn.mpg.de") {
-	file.remove(credentialsPath(host))
+	if (credentialsExist(host)) file.remove(credentialsPath(host))
 	}
 
 credentialsExist <-function(host = "scidb.mpio.orn.mpg.de") {

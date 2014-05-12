@@ -6,7 +6,9 @@ dbcon <- function(user, password, database, host = "scidb.mpio.orn.mpg.de", path
 
    if(missing(user) ) {
 		if(missing(path)) p = credentialsPath(host) else p = path
-		eval(parse(text = readLines(p)[-1]))
+    text = readLines(p)[-1]
+		if (!missing(database)) text = text[-4]
+    eval(parse(text = text))
 	}
 	
   #run query
@@ -15,7 +17,7 @@ dbcon <- function(user, password, database, host = "scidb.mpio.orn.mpg.de", path
   if(OS == "Linux"){
     require(RMySQL) 
     con = dbConnect(dbDriver("MySQL"), username = user, password = password, host = host)
-    if( !missing(database) )
+   # if( !missing(database) )
       mysqlQuickSQL(con, paste("USE", database))
   }
   
