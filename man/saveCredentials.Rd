@@ -1,6 +1,6 @@
 \name{saveCredentials}
-\alias{credentialsExist,}
-\alias{credentialsPath,}
+\alias{credentialsExist}
+\alias{credentialsPath}
 \alias{removeCredentials}
 \alias{saveCredentials}
 \title{manage database credentials}
