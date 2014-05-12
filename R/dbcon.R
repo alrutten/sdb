@@ -1,3 +1,17 @@
+#' connect to a database
+#' 
+#' connects to a database
+#' 
+#'
+#'  
+#' this functions returns a database connection. If user & password remain unspecified, it looks for credentials saved by running \code{\link{saveCredentials}}. Under Linux, the RMySQL package is used to establish the connection; under Windows, RODBC is used.
+#' If database is specified but username and password are not, the database argument in the call to dbcon() is used.
+#' @param user username
+#' @param password password
+#' @param database database to connect to
+#' @param path to credentialsfile (if different from the default \code{\link{credentialsPath}}
+#' @return a connection object
+#' @seealso \code{\link{saveCredentials}}, \code{\link{dbq}}
 dbcon <- function(user, password, database, host = "scidb.mpio.orn.mpg.de", path) {
 
   # figure out credentials

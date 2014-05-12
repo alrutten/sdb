@@ -1,3 +1,12 @@
+#' (connect to and) query the database
+#' 
+#' connect to and query the database in one fell swoop
+#' 
+#' this function either queries the database using a specified connection, or, when no connection is specified, uses the information stored using \code{\link{saveCredentials}} to open a connection (which is closed after executing the query)
+#' @param con an active MySQL or RODBC database connection
+#' @param q a querystring
+#' @seealso \code{\link{saveCredentials}},\code{\link{dbcon}}
+#' @return returns the result of running query q.
 setGeneric("dbq", function(con,q, ...)   standardGeneric("dbq") )
 
 

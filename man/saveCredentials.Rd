@@ -1,0 +1,33 @@
+\name{saveCredentials}
+\alias{credentialsExist,}
+\alias{credentialsPath,}
+\alias{removeCredentials}
+\alias{saveCredentials}
+\title{manage database credentials}
+\usage{
+saveCredentials(user, password, database, host = "scidb.mpio.orn.mpg.de",
+  path = credentialsPath(host))
+}
+\value{
+credentialsExist,removeCredentials, and saveCredentials all
+return TRUE if successful; credentialsPath returns the
+filename of the credentialsfile.
+}
+\description{
+manage database credentials for easier database access
+}
+\details{
+saveCredentials saves the specified credentials to a file
+in your library, unless you specify a custom path. This
+information can be used by \code{\link{dbcon}} and
+\code{\link{dbq}} to connect to and query the database.
+Currently, you can store credentials for different hosts
+(e.g., scidb and scicomp), but not for different users
+within a host. removeCredentials removes the
+credentialsfile for the specified host credentialsExist
+checks if there is a credentialfile for the specified host.
+}
+\seealso{
+\code{\link{dbcon}},\code{\link{dbq}}
+}
+
