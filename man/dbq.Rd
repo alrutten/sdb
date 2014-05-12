@@ -22,6 +22,9 @@ information stored using \code{\link{saveCredentials}} to
 open a connection (which is closed after executing the
 query)
 }
+\author{
+AR 2014-05-12
+}
 \seealso{
 \code{\link{saveCredentials}},\code{\link{dbcon}}
 }

@@ -12,6 +12,7 @@
 #' @param path to credentialsfile (if different from the default \code{\link{credentialsPath}}
 #' @return a connection object
 #' @seealso \code{\link{saveCredentials}}, \code{\link{dbq}}
+#' #' @author AR 2014-05-12
 dbcon <- function(user, password, database, host = "scidb.mpio.orn.mpg.de", path) {
 
   # figure out credentials
