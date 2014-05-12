@@ -12,7 +12,7 @@ dbcon(user, password, database, host = "scidb.mpio.orn.mpg.de", path)
   \item{database}{database to connect to}
 
   \item{path}{to credentialsfile (if different from the
-  default \code{\link{credentialsPath}}}
+  default \code{\link{credentialsPath}})}
 }
 \value{
 a connection object

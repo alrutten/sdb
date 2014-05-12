@@ -9,7 +9,7 @@
 #' @param user username
 #' @param password password
 #' @param database database to connect to
-#' @param path to credentialsfile (if different from the default \code{\link{credentialsPath}}
+#' @param path to credentialsfile (if different from the default \code{\link{credentialsPath}})
 #' @return a connection object
 #' @seealso \code{\link{saveCredentials}}, \code{\link{dbq}}
 #' @author AR 2014-05-12
