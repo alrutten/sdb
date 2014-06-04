@@ -15,7 +15,7 @@ setMethod("dbq",
           signature  = c(con = "RODBC", q = "character"), 
           definition = function(con, q, ...) {
 			# cat("--> DB query via ODBC\n")
-			sqlQuery(con, q,error = TRUE, ... )
+			sqlQuery(con, q,error = TRUE, as.is=TRUE, ... )
           }
 )
 
