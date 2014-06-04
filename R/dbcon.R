@@ -32,7 +32,7 @@ dbcon <- function(user, password, database, host = "scidb.mpio.orn.mpg.de", path
   if(OS == "Linux"){
     require(RMySQL) 
     con = dbConnect(dbDriver("MySQL"), username = user, password = password, host = host)
-   # if( !missing(database) )
+    if( !missing(database) )
       mysqlQuickSQL(con, paste("USE", database))
   }
   
