@@ -1,6 +1,6 @@
 #' (connect to and) query the database
 #' 
-#' connect to and query the database in one fell swoop
+#' connect to and query the database.
 #' 
 #' this function either queries the database using a specified connection, or, when no connection is specified, uses the information stored using \code{\link{saveCredentials}} to open a connection (which is closed after executing the query)
 #' @param con an active MySQL or RODBC database connection
