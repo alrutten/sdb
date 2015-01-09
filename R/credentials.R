@@ -8,9 +8,9 @@ credentialsPath <- function(host) {
 }
 
 #' manage database credentials
-#' 
+#'
 #' manage database credentials for easier database access
-#' 
+#'
 #' saveCredentials saves the specified credentials to a file in your library, unless you specify a custom path. This information can be used by \code{\link{dbcon}} and \code{\link{dbq}} to connect to and query the database.
 #' Currently, you can store credentials for different hosts (e.g., scidb and scicomp), but not for different users within a host.
 #' removeCredentials removes the credentialsfile for the specified host
@@ -19,15 +19,15 @@ credentialsPath <- function(host) {
 #' @aliases credentialsPath credentialsExist removeCredentials
 #' @seealso \code{\link{dbcon}},\code{\link{dbq}}
 #' @author AR 2014-05-12
-saveCredentials <- function(user, password, database, host = "scidb.mpio.orn.mpg.de", 
-                            path = credentialsPath(host)) {
-  
+
+saveCredentials <- function(user, password, database, host = "scidb.mpio.orn.mpg.de", path = credentialsPath(host)) {
+
   # as well for mysql --defaults-file="/path/to/credentials.txt"
-  cat('[client]\n', 
-      'host=', shQuote(host), '\n', 
-      'user=', shQuote(user),'\n', 
-      'password=', shQuote(password),'\n', 
-      'database=', shQuote(database),'\n', 
+  cat('[client]\n',
+      'host=', shQuote(host), '\n',
+      'user=', shQuote(user),'\n',
+      'password=', shQuote(password),'\n',
+      'database=', shQuote(database),'\n',
       file = path, sep = "")
   Sys.chmod(path)
   if(file.info(path)$size > 1) return(TRUE)

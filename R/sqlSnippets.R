@@ -41,7 +41,6 @@ snipLoadFromFile <- function(f, sep = ';', ...) {
 
 snipFetch <- function(id, ...) {
 	res = dbq(q = paste('SELECT query from DBLOG.snippets where ID = ', id) , ...)[1,1]
-#	cat(res)
 	return(invisible(res))
 	}
 

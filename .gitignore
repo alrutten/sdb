@@ -2,3 +2,5 @@
 .Rhistory
 .RData
 __queries.sql
+sdb.sublime-project
+sdb.sublime-workspace
