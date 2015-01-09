@@ -13,6 +13,7 @@
 #' @return a connection object
 #' @seealso \code{\link{saveCredentials}}, \code{\link{dbq}}
 
+
 dbcon <- function(user, password, database, host = "scidb.mpio.orn.mpg.de", path) {
 
   # figure out credentials
@@ -24,6 +25,7 @@ dbcon <- function(user, password, database, host = "scidb.mpio.orn.mpg.de", path
     text = readLines(p)[-1]
 		if (!missing(database)) text = text[-4]
     eval(parse(text = text))
+
 	}
 
   #run query
