@@ -16,12 +16,11 @@ credentialsPath <- function(host) {
 #' removeCredentials removes the credentialsfile for the specified host
 #' credentialsExist checks if there is a credentialfile for the specified host.
 #' @return credentialsExist,removeCredentials, and saveCredentials all return TRUE if successful; credentialsPath returns the filename of the credentialsfile.
-#' @aliases credentialsPath credentialsExist removeCredentials
+#' @aliases credentialsPath credentialsExist removeCredentials getCredentials
 #' @seealso \code{\link{dbcon}},\code{\link{dbq}}
-#' @author AR 2014-05-12
+
 
 saveCredentials <- function(user, password, database, host = "scidb.mpio.orn.mpg.de", path = credentialsPath(host)) {
-
   # as well for mysql --defaults-file="/path/to/credentials.txt"
   cat('[client]\n',
       'host=', shQuote(host), '\n',
@@ -31,8 +30,7 @@ saveCredentials <- function(user, password, database, host = "scidb.mpio.orn.mpg
       file = path, sep = "")
   Sys.chmod(path)
   if(file.info(path)$size > 1) return(TRUE)
-}
-
+ }
 
 removeCredentials <-function(host = "scidb.mpio.orn.mpg.de") {
 	if (credentialsExist(host)) file.remove(credentialsPath(host))
@@ -42,3 +40,13 @@ credentialsExist <-function(host = "scidb.mpio.orn.mpg.de") {
 	file.exists(credentialsPath(host))
 	}
 
+getCredentials <- function(host = "scidb.mpio.orn.mpg.de") {
+  if(!credentialsExist(host)) o = c("Credentials are not set!", "") else {
+    x = readLines(credentialsPath(host))[-1]
+    o = list()
+    o = sapply(x, function(x) eval(parse(text = x), envir = o)  )
+    names(o) = c("host", "user", "password", "database")
+    }
+  o
+
+  }
