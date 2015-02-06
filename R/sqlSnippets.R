@@ -20,9 +20,7 @@ snipSave <- function(query, description='', format = TRUE, host = "scidb.mpio.or
 
 	cat( paste(" as  ID: ", res[1,1]), "\n")
 
-
-
-}
+ }
 
 snipLoadFromFile <- function(f, sep = ';', ...) {
 
@@ -66,22 +64,6 @@ snipSearch <- function(kw, author, ...) {
 	print(prt)
 	return(invisible(res))
 	}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

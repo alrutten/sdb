@@ -3,7 +3,6 @@ Using snippets
 
 #### Saving an arbitrary query to DBLOG.snippets with snipSave().
 
-`snipSave()` has a [format](https://github.com/andialbrecht/sqlparse/) argument (default `TRUE`) which allows formating of messy querries. 
 `snipSave()` requires to save your credentials with `saveCredentials()`.
 
 ```{r, eval=FALSE}
@@ -13,11 +12,11 @@ dbq(q = "select 1")
 
 
 ```{r, eval=FALSE}
-snipSave('SelecT SPECIFIC_NAME,ROUTINE_SCHEMA FROm information_schema.ROUTINES ') 
+snipSave('SelecT SPECIFIC_NAME,ROUTINE_SCHEMA FROm information_schema.ROUTINES ')
 ```
 
 #### Clonning a snippet simply makes a copy of that snippet and replaces the author with your name.
-```{r, eval=FALSE} 
+```{r, eval=FALSE}
 snipClone(1)
 snipDrop(2)
 ```

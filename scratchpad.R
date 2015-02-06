@@ -1,0 +1,47 @@
+
+ # runApp
+	options(shiny.reactlog=TRUE)
+	shiny::runApp('/home/mihai/github_projects/sdb/inst/snippets/UI')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
