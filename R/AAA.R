@@ -7,8 +7,4 @@
   if( ! Sys.info()["sysname"] %in% c("Linux", "Windows"))
     packageStartupMessage("sdb might not work under", OS)
 
-    packageStartupMessage("Credentials set for: ", paste(getCredentials()[1:2], collapse = "; ") )
-
-
-
 }

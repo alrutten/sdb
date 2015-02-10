@@ -5,38 +5,32 @@
 #'
 #'
 #' this functions returns a database connection. If user & password remain unspecified, it looks for credentials saved by running \code{\link{saveCredentials}}. Under Linux, the RMySQL package is used to establish the connection; under Windows, RODBC is used.
-#' If database is specified but username and password are not, the database argument in the call to dbcon() is used.
 #' @param user username
 #' @param password password
 #' @param database database to connect to
-#' @param path to credentialsfile (if different from the default \code{\link{credentialsPath}})
+#' @param path to credentials file (if different from the default)
 #' @return a connection object
-#' @seealso \code{\link{saveCredentials}}, \code{\link{dbq}}
+#' @seealso \code{\link{saveCredentials}}, \code{\link{dbq} }
 
 
-dbcon <- function(user, password, database, host = "scidb.mpio.orn.mpg.de", path) {
 
-  # figure out credentials
-  if( missing(user) & !credentialsExist(host) & missing(path) )
-	stop("Run ", dQuote("saveCredentials()"), " first, enter your user name & password or add a path to a credentials file")
+dbcon <- function(user, pwd, db = NA, host = "scidb.mpio.orn.mpg.de", path ) {
+  if(missing(path)) path = .credentialsPath()
 
-   if(missing(user) ) {
-		if(missing(path)) p = credentialsPath(host) else p = path
-    text = readLines(p)[-1]
-		if (!missing(database)) text = text[-4]
-    eval(parse(text = text))
+  if(!missing(user) & !missing(pwd) )
+    X = data.frame(user, pwd, db, host) else
+    X = .getCredentials(user = user, host = host, path = path  )
 
-	}
+    if( nrow(X) == 0 ) stop( "User ", dQuote(user), " is not saved as an user of ", dQuote(db) )
 
   #run query
   OS = Sys.info()["sysname"]
 
   if(OS == "Linux"){
     require(RMySQL)
-    con = dbConnect(dbDriver("MySQL"), username = user, password = password, host = host)
-    if( !missing(database) )
-      dbq(con, paste("USE", database))
-  }
+    con = dbConnect(dbDriver("MySQL"), username = X$user, password = X$pwd, host = X$host)
+
+   }
 
   if(OS == "Windows") {
     require(RODBC)
@@ -49,17 +43,19 @@ dbcon <- function(user, password, database, host = "scidb.mpio.orn.mpg.de", path
     drv = grep("MySQL",  names(drv), value = TRUE)
     drv = sort(drv, decreasing = TRUE)[1]
 
-    conStr=paste0("SERVER=",host,";DRIVER=",drv,";UID=",user,";PWD=",password,";case=nochange;option=268435456")
+    conStr=paste0("SERVER=",X$host,";DRIVER=",drv,";UID=",X$user,";PWD=",X$pwd,";case=nochange;option=268435456")
 
     con = odbcDriverConnect(connection=conStr)
 
-    if( !missing(database) )
-      sqlQuery(con, paste("USE", database))
+    }
+
+
+    if( !is.na(db) )
+      dbq(con, paste("USE", db))
+
+    return(con)
+
   }
-
-  return(con)
-
- }
 
 
 closeCon <- function(con) {

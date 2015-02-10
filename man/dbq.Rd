@@ -2,26 +2,23 @@
 % Please edit documentation in R/dbq.R
 \name{dbq}
 \alias{dbq}
-\title{(connect to and) query the database}
+\title{query the database}
 \usage{
 dbq(con, q, ...)
 }
 \arguments{
-\item{con}{an active MySQL or RODBC database connection}
+\item{con}{a connection object returned by \code{\link{dbcon}}}
 
-\item{q}{a querystring}
+\item{q}{a query string. credentials are storred on disk.}
 }
 \value{
-returns the result of running query q.
+a data.frame for a SELECT query or otherwise NULL.
 }
 \description{
-connect to and query the database.
+query the database using an user-defined connection or a temp connection based on saved credentials.
 }
 \details{
-this function either queries the database using a specified connection, or, when no connection is specified, uses the information stored using \code{\link{saveCredentials}} to open a connection (which is closed after executing the query)
-}
-\author{
-AR 2014-05-12
+run an SQL query.
 }
 \seealso{
 \code{\link{saveCredentials}},\code{\link{dbcon}}

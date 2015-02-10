@@ -1,6 +1,6 @@
 Package: sdb
-Version: 0.0.55
-Date: 2015-Feb-04
+Version: 0.0.56
+Date: 2015-02-10T10:56:49+01:00
 Type: Package
 Depends:
     R (>= 3.0.0)

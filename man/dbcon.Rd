@@ -4,16 +4,16 @@
 \alias{dbcon}
 \title{connect to a database}
 \usage{
-dbcon(user, password, database, host = "scidb.mpio.orn.mpg.de", path)
+dbcon(user, pwd, db = NA, host = "scidb.mpio.orn.mpg.de", path)
 }
 \arguments{
 \item{user}{username}
 
+\item{path}{to credentials file (if different from the default)}
+
 \item{password}{password}
 
 \item{database}{database to connect to}
-
-\item{path}{to credentialsfile (if different from the default \code{\link{credentialsPath}})}
 }
 \value{
 a connection object
@@ -25,9 +25,8 @@ connects to a database
 
 
 this functions returns a database connection. If user & password remain unspecified, it looks for credentials saved by running \code{\link{saveCredentials}}. Under Linux, the RMySQL package is used to establish the connection; under Windows, RODBC is used.
-If database is specified but username and password are not, the database argument in the call to dbcon() is used.
 }
 \seealso{
-\code{\link{saveCredentials}}, \code{\link{dbq}}
+\code{\link{saveCredentials}}, \code{\link{dbq} }
 }
 

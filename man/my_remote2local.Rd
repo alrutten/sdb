@@ -4,7 +4,8 @@
 \alias{my_remote2local}
 \title{dumps tables on localhost}
 \usage{
-my_remote2local(db, tables, pwdLocal, userLocal = "root")
+my_remote2local(db, tables, remoteUser, remoteHost = "scidb.orn.mpg.de",
+  localUser = "root")
 }
 \arguments{
 \item{tables}{tables are given as a "tableName1 tableName2".}
@@ -15,7 +16,7 @@ my_remote2local uses mysql CLI and mysqldump to copy tables from remote to local
 \note{
 non-table objects (views, procedures, etc) are exported by default.
 }
-\seealso{
-\code{\link{getCredentials}},\code{\link{mysqlCLI}}
+\examples{
+my_remote2local("dbnam", "table", 'user')
 }
 
