@@ -14,21 +14,21 @@
 
 
 
-dbcon <- function(user, pwd, db = NA, host = "scidb.mpio.orn.mpg.de", path ) {
+dbcon <- function(user, password, database = NA, host = "scidb.mpio.orn.mpg.de", path ) {
   if(missing(path)) path = .credentialsPath()
 
-  if(!missing(user) & !missing(pwd) )
-    X = data.frame(user, pwd, db, host) else
+  if(!missing(user) & !missing(password) )
+    X = data.frame(user, password, database, host) else
     X = .getCredentials(user = user, host = host, path = path  )
 
-    if( nrow(X) == 0 ) stop( "User ", dQuote(user), " is not saved as an user of ", dQuote(db) )
+    if( nrow(X) == 0 ) stop( "User ", dQuote(user), " is not saved as an user of ", dQuote(database) )
 
   #run query
   OS = Sys.info()["sysname"]
 
   if(OS == "Linux"){
     require(RMySQL)
-    con = dbConnect(dbDriver("MySQL"), username = X$user, password = X$pwd, host = X$host)
+    con = dbConnect(dbDriver("MySQL"), username = X$user, password = X$password, host = X$host)
 
    }
 
@@ -43,15 +43,15 @@ dbcon <- function(user, pwd, db = NA, host = "scidb.mpio.orn.mpg.de", path ) {
     drv = grep("MySQL",  names(drv), value = TRUE)
     drv = sort(drv, decreasing = TRUE)[1]
 
-    conStr=paste0("SERVER=",X$host,";DRIVER=",drv,";UID=",X$user,";PWD=",X$pwd,";case=nochange;option=268435456")
+    conStr=paste0("SERVER=",X$host,";DRIVER=",drv,";UID=",X$user,";PWD=",X$password,";case=nochange;option=268435456")
 
     con = odbcDriverConnect(connection=conStr)
 
     }
 
 
-    if( !is.na(db) )
-      dbq(con, paste("USE", db))
+    if( !is.na(database) )
+      dbq(con, paste("USE", database))
 
     return(con)
 
