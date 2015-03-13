@@ -12,15 +12,15 @@
 #' @return a connection object
 #' @seealso \code{\link{saveCredentials}}, \code{\link{dbq} }
 
-
-
 dbcon <- function(user, password, database = NA, host = "scidb.mpio.orn.mpg.de", path ) {
   if(missing(path)) path = .credentialsPath()
 
   if(!missing(user) & !missing(password) )
     X = data.frame(user, password, database, host, stringsAsFactors=FALSE) else
     X = .getCredentials(user = user, host = host, path = path  )
-
+  
+    names(X) = c('user', 'password', 'database', 'host')
+    
     if( nrow(X) == 0 ) stop( "User ", dQuote(user), " is not saved as an user of ", dQuote(database) )
 
   #run query
