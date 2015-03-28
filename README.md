@@ -3,4 +3,4 @@ sdb
 
 require(devtools)
 
-install_github("valcu/sdb")
+install_github("beMPIO/sdb")
