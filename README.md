@@ -3,4 +3,4 @@ sdb
 
 require(devtools)
 
-install_github("beMPIO/sdb")
+`install_github("beMPIO/sdb")`
